@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/novo"
+        android:icon="@drawable/ic_novo"
+        android:title="Novo"
+        app:showAsAction="always"/> <!-- Mostrar sempre as ações -->
+    <!-- icon é a Propriedade para puxar a imagem -->
+</menu>
