@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.DatePicker
+import br.aula.filmes.bd.Filme
+import br.aula.filmes.bd.FilmeRepository
 import kotlinx.android.synthetic.main.activity_filme.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -13,6 +15,7 @@ import java.util.*
 class FilmeActivity : AppCompatActivity() {
     var calendario = Calendar.getInstance()
     var datafilme: Button? = null
+    var filme: Filme? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +23,15 @@ class FilmeActivity : AppCompatActivity() {
 
         val myChildToolbar = toolbar_child
         setSupportActionBar(myChildToolbar)
+
+        if(intent != null){
+            if(intent.getSerializableExtra("filme") != null){
+                filme = intent.getSerializableExtra("filme") as Filme
+
+                txtNome?.setText(filme?.nome)
+                txtDescricao?.setText(filme?.descricao)
+            }
+        }
 
         // Get a support ActionBar corresponding to this toolbar
         val ab = supportActionBar
@@ -50,6 +62,16 @@ class FilmeActivity : AppCompatActivity() {
                 ).show()
             }
         })
+
+        btnCadastro?.setOnClickListener {
+            val filme = Filme(
+                nome = txtNome?.text.toString(),
+                dtlancamento = calendario.timeInMillis,
+                descricao = txtDescricao?.text.toString())
+
+            FilmeRepository(this).create(filme)
+            finish()
+        }
     }
     private fun updateDateInView() {
         val myFormat = "dd/MM/yyyy" // mention the format you need

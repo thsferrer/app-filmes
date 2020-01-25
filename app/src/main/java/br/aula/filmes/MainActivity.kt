@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import br.aula.filmes.bd.Filme
 import br.aula.filmes.bd.FilmeRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -26,11 +27,6 @@ class MainActivity : AppCompatActivity() {
 
         var listaFilmes = lista // lista corresponde ao id que está no layout no componente ListView
         lista.adapter = adapter
-
-       lista.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this@MainActivity, EditarActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -47,6 +43,19 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+    override fun onResume() {
+        super.onResume()
+        val filmes = FilmeRepository(this).findAll()
+        val adapter= ArrayAdapter(this, android.R.layout.simple_list_item_1, filmes)
+        lista?.adapter = adapter
+        adapter.notifyDataSetChanged()
+
+        lista.setOnItemClickListener { _, _, position, id ->
+            val intent = Intent(this, FilmeActivity::class.java)
+            intent.putExtra("filme", filmes?.get(position))
+            startActivity(intent)
         }
     }
 }
