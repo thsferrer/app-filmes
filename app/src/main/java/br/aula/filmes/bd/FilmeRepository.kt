@@ -16,6 +16,7 @@ class FilmeRepository(val context: Context) {
                     val filme = Filme(
                         id = columns.getValue("id").toString()?.toLong(),
                         nome = columns.getValue("nome")as String,
+                        dtlancamento = columns.getValue("dtlancamento")?.toString()?.toLong(),
                         descricao = columns.getValue("descricao") as String)
                     filmes.add(filme)
                     return filmes

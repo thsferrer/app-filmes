@@ -25,7 +25,7 @@ class FilmeActivity : AppCompatActivity() {
         setSupportActionBar(myChildToolbar)
 
         if(intent != null){
-            if(intent.getSerializableExtra("filme") != null){
+            if(intent?.getSerializableExtra("filme") != null){
                 filme = intent.getSerializableExtra("filme") as Filme
 
                 txtNome?.setText(filme?.nome)
@@ -83,7 +83,7 @@ class FilmeActivity : AppCompatActivity() {
     private fun updateDateInView() {
         val myFormat = "dd/MM/yyyy" // mention the format you need
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        datafilme!!.text = sdf.format(calendario.getTime())
+        txtData.text = sdf.format(calendario.getTime())
     }
 
 }
