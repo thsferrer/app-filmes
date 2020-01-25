@@ -1,7 +1,7 @@
 package br.aula.database
 import java.io.Serializable
 
-data class Filme {
+data class Filme (
     var id: Long = 0,
     var foto: String? = null,
     var nome: String? = null,
