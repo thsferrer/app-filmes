@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
+import br.aula.filmes.bd.FilmeRepository
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -19,11 +20,12 @@ class MainActivity : AppCompatActivity() {
         myToolbar.setTitleTextColor(Color.WHITE)
         setSupportActionBar(myToolbar)
 
-        val filmes = arrayOf("Minha Mãe é uma Peça", "Minha Mãe é uma Peça 2", "A Casa do Lago")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, filmes)
+        val filmes = FilmeRepository(this).findAll()
+        val adapter
+                = ArrayAdapter(this, android.R.layout.simple_list_item_1, filmes)
 
-       var listaFilmes = lista
-        listaFilmes.setAdapter(adapter);
+        var listaFilmes = lista // lista corresponde ao id que está no layout no componente ListView
+        lista.adapter = adapter
 
        lista.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this@MainActivity, EditarActivity::class.java)
