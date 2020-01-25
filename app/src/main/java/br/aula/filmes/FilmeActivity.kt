@@ -29,7 +29,11 @@ class FilmeActivity : AppCompatActivity() {
                 filme = intent.getSerializableExtra("filme") as Filme
 
                 txtNome?.setText(filme?.nome)
+                //txtData = cal.timeInMillis,
                 txtDescricao?.setText(filme?.descricao)
+            }
+            else{
+                filme = Filme()
             }
         }
 
@@ -64,12 +68,15 @@ class FilmeActivity : AppCompatActivity() {
         })
 
         btnCadastro?.setOnClickListener {
-            val filme = Filme(
-                nome = txtNome?.text.toString(),
-                dtlancamento = calendario.timeInMillis,
-                descricao = txtDescricao?.text.toString())
+                filme?.nome = txtNome?.text.toString()
+                filme?.dtlancamento = calendario.timeInMillis
+                filme?.descricao = txtDescricao?.text.toString()
 
-            FilmeRepository(this).create(filme)
+            if(filme?.id?.toInt() == 0){
+                FilmeRepository(this).create(filme!!)
+            }else{
+                FilmeRepository(this).update(filme!!)
+            }
             finish()
         }
     }
